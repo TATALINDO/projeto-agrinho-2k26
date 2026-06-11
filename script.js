@@ -656,24 +656,39 @@ function setupQuizEngine() {
     // Render options
     q.options.forEach((opt, idx) => {
       const btn = document.createElement('button');
-      btn.className = 'quiz-option-btn w-full text-left p-5 rounded-2xl flex items-center justify-between group focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium bg-transparent';
+      // Set explicit Tailwind and design classes so it is independent of stylesheet loading issues
+      btn.className = 'quiz-option-btn w-full text-left p-5 rounded-2xl flex items-center justify-between group focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium bg-transparent border border-emerald-500/20 text-[#133924] dark:text-[#e8fdf2] hover:bg-emerald-500/5 dark:hover:bg-emerald-500/10 transition-all duration-200 cursor-pointer';
       btn.setAttribute('data-index', idx);
       
       const char = ['A', 'B', 'C', 'D'][idx];
       btn.innerHTML = `
-        <span>${opt}</span>
-        <span class="w-6 h-6 rounded-full border border-emerald-500/30 flex items-center justify-center text-xs group-hover:bg-emerald-500/10 transition-colors">${char}</span>
+        <span class="pr-4 pointer-events-none">${opt}</span>
+        <span class="quiz-badge w-6 h-6 rounded-full border border-emerald-500/30 flex items-center justify-center text-xs group-hover:bg-emerald-500/10 transition-colors shrink-0 pointer-events-none">${char}</span>
       `;
 
       btn.addEventListener('click', () => {
         if (APP_STATE.quiz.answered) return;
         
-        // Remove previous selection highlight
+        // Remove previous selection highlight from all buttons
         document.querySelectorAll('.quiz-option-btn').forEach(b => {
-          b.classList.remove('selected', 'bg-emerald-500/10', 'border-emerald-500', 'font-semibold');
+          b.className = 'quiz-option-btn w-full text-left p-5 rounded-2xl flex items-center justify-between group focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium bg-transparent border border-emerald-500/20 text-[#133924] dark:text-[#e8fdf2] hover:bg-emerald-500/5 dark:hover:bg-emerald-500/10 transition-all duration-200 cursor-pointer';
+          const innerBadge = b.querySelector('.quiz-badge');
+          if (innerBadge) {
+            const innerIdx = parseInt(b.getAttribute('data-index') || '0', 10);
+            const innerChar = ['A', 'B', 'C', 'D'][innerIdx];
+            innerBadge.innerHTML = innerChar;
+            innerBadge.className = 'quiz-badge w-6 h-6 rounded-full border border-emerald-500/30 flex items-center justify-center text-xs group-hover:bg-emerald-500/10 transition-colors shrink-0';
+          }
         });
 
-        btn.classList.add('selected', 'bg-emerald-500/10', 'border-emerald-500', 'font-semibold');
+        // Add selected highlight to current button
+        btn.className = 'quiz-option-btn w-full text-left p-5 rounded-2xl flex items-center justify-between group focus:outline-none focus:ring-2 focus:ring-emerald-500 font-semibold bg-emerald-500/10 border-emerald-500 text-emerald-900 dark:text-emerald-300 shadow-md transition-all duration-200 cursor-pointer';
+        
+        const badge = btn.querySelector('.quiz-badge');
+        if (badge) {
+          badge.className = 'quiz-badge w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs font-bold transition-all duration-200 shrink-0';
+        }
+
         APP_STATE.quiz.selectedOption = idx;
 
         // Activate Confirm
@@ -694,23 +709,25 @@ function setupQuizEngine() {
       const buttons = document.querySelectorAll('.quiz-option-btn');
       
       buttons.forEach((btn, idx) => {
-        btn.classList.remove('selected', 'bg-emerald-500/10', 'border-emerald-500', 'font-semibold');
-        const badge = btn.querySelector('span:last-child');
+        const badge = btn.querySelector('.quiz-badge');
         
         if (idx === q.correctIdx) {
-          btn.classList.add('correct');
+          // Force active green styling with absolute color class priority
+          btn.className = 'quiz-option-btn w-full text-left p-5 rounded-2xl flex items-center justify-between group focus:outline-none focus:ring-2 focus:ring-emerald-500 font-bold bg-green-500/15 border-green-500 text-green-800 dark:text-green-300 shadow-[0_0_12px_rgba(34,197,94,0.3)] transition-all duration-200';
           if (badge) {
             badge.innerHTML = '✓';
-            badge.className = 'w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center text-xs font-bold shadow-sm';
+            badge.className = 'quiz-badge w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center text-xs font-bold shadow-sm shrink-0';
           }
         } else if (idx === APP_STATE.quiz.selectedOption) {
-          btn.classList.add('wrong');
+          // Force active red styling with absolute color class priority
+          btn.className = 'quiz-option-btn w-full text-left p-5 rounded-2xl flex items-center justify-between group focus:outline-none focus:ring-2 focus:ring-emerald-500 font-bold bg-red-500/15 border-red-500 text-red-700 dark:text-red-400 shadow-[0_0_12px_rgba(239,68,68,0.2)] transition-all duration-200';
           if (badge) {
             badge.innerHTML = '✗';
-            badge.className = 'w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center text-xs font-bold shadow-sm';
+            badge.className = 'quiz-badge w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center text-xs font-bold shadow-sm shrink-0';
           }
         } else {
-          btn.classList.add('faded');
+          // Faded unselected elements
+          btn.className = 'quiz-option-btn w-full text-left p-5 rounded-2xl flex items-center justify-between group focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium bg-transparent border border-emerald-500/10 text-[#133924] dark:text-[#e8fdf2] opacity-40 pointer-events-none transition-all duration-200';
         }
       });
 
