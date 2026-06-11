@@ -670,10 +670,10 @@ function setupQuizEngine() {
         
         // Remove previous selection highlight
         document.querySelectorAll('.quiz-option-btn').forEach(b => {
-          b.classList.remove('selected');
+          b.classList.remove('selected', 'bg-emerald-500/10', 'border-emerald-500', 'font-semibold');
         });
 
-        btn.classList.add('selected');
+        btn.classList.add('selected', 'bg-emerald-500/10', 'border-emerald-500', 'font-semibold');
         APP_STATE.quiz.selectedOption = idx;
 
         // Activate Confirm
@@ -694,11 +694,11 @@ function setupQuizEngine() {
       const buttons = document.querySelectorAll('.quiz-option-btn');
       
       buttons.forEach((btn, idx) => {
-        btn.classList.remove('selected');
+        btn.classList.remove('selected', 'bg-emerald-500/10', 'border-emerald-500', 'font-semibold');
         if (idx === q.correctIdx) {
-          btn.classList.add('correct');
+          btn.classList.add('correct', 'bg-green-500/20', 'border-green-500', 'text-green-800', 'dark:text-green-300', 'font-bold');
         } else if (idx === APP_STATE.quiz.selectedOption) {
-          btn.classList.add('wrong');
+          btn.classList.add('wrong', 'bg-red-500/15', 'border-red-500', 'text-red-800', 'dark:text-red-400', 'font-bold');
         }
       });
 
