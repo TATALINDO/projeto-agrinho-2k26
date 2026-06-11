@@ -1,0 +1,550 @@
+@import "tailwindcss";
+
+/* EcoAgro 2050 - Design System & Custom Styles */
+
+@theme {
+  --color-primary: #0F3823;
+  --color-primary-light: #2ECC71;
+  --color-primary-dark: #082014;
+  --color-accent: #2471A3;
+  --color-accent-light: #3498DB;
+  --color-nature-gold: #F1C40F;
+  --color-leaf-bg: #E8F8F5;
+  --color-forest: #196F3D;
+}
+
+/* Custom CSS Variables & Dark Theme overrides */
+:root {
+  --bg-color-main: #f4faf6;
+  --bg-color-card: #ffffff;
+  --text-main: #133924;
+  --text-muted: #4a6b57;
+  --border-color: rgba(46, 204, 113, 0.2);
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --shadow-color: rgba(15, 56, 35, 0.1);
+  --glow-color: rgba(46, 204, 113, 0.4);
+  --color-brand: #2ECC71;
+  --color-brand-hover: #27AE60;
+  --color-brand-glow: rgba(46, 204, 113, 0.4);
+  --color-brand-light: rgba(46, 204, 113, 0.15);
+}
+
+.dark {
+  --bg-color-main: #0a1711;
+  --bg-color-card: #0f241a;
+  --text-main: #e8fdf2;
+  --text-muted: #a3c4b2;
+  --border-color: rgba(46, 204, 113, 0.3);
+  --glass-bg: rgba(15, 36, 26, 0.85);
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --glow-color: rgba(46, 204, 113, 0.6);
+  --color-brand: #2ECC71;
+  --color-brand-hover: #27AE60;
+  --color-brand-glow: rgba(46, 204, 113, 0.6);
+  --color-brand-light: rgba(46, 204, 113, 0.2);
+}
+
+/* Global Transitions and Base Styles */
+html {
+  scroll-behavior: smooth;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+body {
+  background-color: var(--bg-color-main);
+  color: var(--text-main);
+  overflow-x: hidden;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px 0 var(--shadow-color);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, background 0.5s ease;
+}
+
+.glass-panel:hover {
+  box-shadow: 0 12px 40px 0 var(--shadow-color), 0 0 15px 2px var(--glow-color);
+}
+
+/* Custom Cards Interativos */
+.interactive-card {
+  transform: translateY(0);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.interactive-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--color-brand);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #196F3D;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2ECC71;
+}
+
+/* Animated Title Glow */
+.tech-glow-text {
+  text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+}
+
+/* Leaf Animation Effect in background */
+@keyframes float-leaf {
+  0% {
+    transform: translateY(100vh) rotate(0deg) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-10vh) rotate(360deg) translateX(50px);
+    opacity: 0;
+  }
+}
+
+.leaf-particle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  animation: float-leaf 12s linear infinite;
+  opacity: 0;
+  color: var(--color-brand);
+}
+
+/* Custom Animated Keyframes */
+@keyframes tech-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+.pulse-grid {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, rgba(46, 204, 113, 0.08) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(46, 204, 113, 0.08) 1px, transparent 1px);
+  animation: tech-pulse 8s infinite ease-in-out;
+}
+
+/* Smooth Fade In Sections */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Eco-Simulator Circular Gauge Styles */
+.gauge-container {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+
+.gauge-svg {
+  transform: rotate(-90deg);
+}
+
+.gauge-circle-bg {
+  fill: none;
+  stroke: rgba(127, 140, 141, 0.15);
+  stroke-width: 12;
+}
+
+.gauge-circle-fill {
+  fill: none;
+  stroke: var(--color-brand);
+  stroke-width: 12;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), stroke 0.5s ease;
+}
+
+/* Buttons with Dynamic Borders and Hover effects */
+.btn-eco {
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.btn-eco::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  background: var(--color-brand);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.6s ease;
+  z-index: -1;
+  opacity: 0.15;
+}
+
+.btn-eco:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Banner Vector Graphics Spinning */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinning-gear {
+  animation: spin-slow 20s linear infinite;
+  transform-origin: center;
+}
+
+.spinning-windmill {
+  animation: spin-slow 8s linear infinite;
+  transform-origin: 50% 31%;
+}
+
+.bobbing-drone {
+  animation: drone-bob 4s ease-in-out infinite;
+}
+
+@keyframes drone-bob {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+
+/* Quiz styling */
+.quiz-option-btn {
+  border: 1.5px solid var(--border-color);
+  transition: all 0.25s ease;
+  color: var(--text-main);
+}
+
+.quiz-option-btn:hover {
+  background: var(--color-brand-light);
+  border-color: var(--color-brand);
+}
+
+.quiz-option-btn.selected {
+  background: var(--color-brand-light);
+  border-color: var(--color-brand);
+  font-weight: 600;
+  box-shadow: 0 0 10px 1px var(--color-brand-glow);
+}
+
+.quiz-option-btn.correct {
+  background: rgba(46, 204, 113, 0.2);
+  border-color: #2ECC71;
+  color: #196F3D;
+}
+
+.dark .quiz-option-btn.correct {
+  color: #2ECC71;
+}
+
+.quiz-option-btn.wrong {
+  background: rgba(231, 76, 60, 0.15);
+  border-color: #E74C3C;
+  color: #922B21;
+}
+
+.dark .quiz-option-btn.wrong {
+  color: #EC7063;
+}
+
+/* Arcade layout */
+.arcade-container {
+  background: radial-gradient(circle at center, #1b3327 0%, #06100a 100%);
+  border: 8px solid #0f2e1e;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(46, 204, 113, 0.3);
+}
+
+/* Dark/Light Toggle button special transition */
+.theme-switch-slider {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ==========================================
+   EcoAgro 2050 - Theme & Typography Customizer
+   ========================================== */
+
+/* Theme Variables Definition */
+:root {
+  --color-brand: #10b981;
+  --color-brand-hover: #059669;
+  --color-brand-glow: rgba(16, 185, 129, 0.4);
+  --color-brand-light: rgba(16, 185, 129, 0.15);
+  
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Map fonts to elements */
+html {
+  font-family: var(--font-body), 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-family: var(--font-heading), 'Outfit', sans-serif !important;
+}
+
+/* Accessibility Text Scales */
+html.text-scale-normal {
+  font-size: 16px;
+}
+html.text-scale-medium {
+  font-size: 17.5px;
+}
+html.text-scale-large {
+  font-size: 19px;
+}
+
+/* Font Families Presets Classes */
+html.font-preset-modern {
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+}
+html.font-preset-elegant {
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+}
+html.font-preset-tech {
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'JetBrains Mono', monospace;
+}
+
+/* Dynamic Active Settings Controls State */
+.font-preset-btn.active {
+  border-color: var(--color-brand) !important;
+  background: var(--color-brand-light) !important;
+  font-weight: 700;
+  box-shadow: 0 0 10px 1px var(--color-brand-glow);
+}
+.scale-preset-btn.active {
+  background-color: var(--color-brand) !important;
+  color: white !important;
+  box-shadow: 0 4px 12px 0 var(--color-brand-glow);
+}
+
+/* Interactive Color presets selection marker state */
+.color-preset-btn.active {
+  transform: scale(1.1);
+  box-shadow: 0 0 12px 3px var(--color-brand-glow);
+}
+
+/* --- DYNAMIC EMERALD UTILITY OVERRIDES (Saves thousands of custom tags edits) --- */
+
+/* Theme preset: AMBER GOLD */
+html.theme-preset-amber {
+  --color-brand: #f59e0b;
+  --color-brand-hover: #d97706;
+  --color-brand-glow: rgba(245, 158, 11, 0.4);
+  --color-brand-light: rgba(245, 158, 11, 0.15);
+  --border-color: rgba(245, 158, 11, 0.25);
+  --glow-color: rgba(245, 158, 11, 0.4);
+}
+html.theme-preset-amber.dark,
+html.theme-preset-amber .dark {
+  --border-color: rgba(245, 158, 11, 0.35);
+  --glow-color: rgba(245, 158, 11, 0.6);
+  --glass-bg: rgba(28, 25, 23, 0.85);
+}
+
+html.theme-preset-amber .text-emerald-500 { color: #f59e0b !important; }
+html.theme-preset-amber .text-emerald-600 { color: #d97706 !important; }
+html:not(.dark).theme-preset-amber .text-emerald-700 { color: #b45309 !important; }
+html:not(.dark).theme-preset-amber .text-emerald-800 { color: #92400e !important; }
+html:not(.dark).theme-preset-amber .text-emerald-950 { color: #451a03 !important; }
+html.theme-preset-amber .dark\:text-emerald-300 { color: #fde68a !important; }
+html.theme-preset-amber .dark\:text-emerald-400 { color: #fcd34d !important; }
+html.theme-preset-amber .bg-emerald-500 { background-color: #f59e0b !important; }
+html.theme-preset-amber .bg-emerald-600 { background-color: #d97706 !important; }
+html.theme-preset-amber .bg-emerald-700 { background-color: #b45309 !important; }
+html:not(.dark).theme-preset-amber .bg-emerald-950 { background-color: #451a03 !important; }
+html.theme-preset-amber .border-emerald-500\/10 { border-color: rgba(245, 158, 11, 0.1) !important; }
+html.theme-preset-amber .border-emerald-500\/20 { border-color: rgba(245, 158, 11, 0.2) !important; }
+html.theme-preset-amber .border-emerald-500\/30 { border-color: rgba(245, 158, 11, 0.3) !important; }
+html.theme-preset-amber .bg-emerald-500\/10 { background-color: rgba(245, 158, 11, 0.1) !important; }
+html.theme-preset-amber .bg-emerald-500\/20 { background-color: rgba(245, 158, 11, 0.2) !important; }
+html.theme-preset-amber .bg-emerald-500\/5 { background-color: rgba(245, 158, 11, 0.05) !important; }
+html.theme-preset-amber .hover\:bg-emerald-700:hover { background-color: #b45309 !important; }
+html.theme-preset-amber .hover\:bg-emerald-200:hover { background-color: #fde68a !important; }
+html.theme-preset-amber.dark .dark\:bg-[#0f241a], html.theme-preset-amber .dark .dark\:bg-[#0f241a] { background-color: #171412 !important; }
+html.theme-preset-amber .dark\:hover\:bg-emerald-400:hover { background-color: #fbbf24 !important; }
+html.theme-preset-amber .dark\:bg-emerald-500\/20 { background-color: rgba(245, 158, 11, 0.2) !important; }
+html.theme-preset-amber .dark\:text-emerald-100 { color: #fffbeb !important; }
+html.theme-preset-amber ::-webkit-scrollbar-thumb { background: #d97706; }
+html.theme-preset-amber ::-webkit-scrollbar-thumb:hover { background: #f59e0b; }
+
+/* Theme preset: SKY BLUE */
+html.theme-preset-blue {
+  --color-brand: #0ea5e9;
+  --color-brand-hover: #0284c7;
+  --color-brand-glow: rgba(14, 165, 233, 0.4);
+  --color-brand-light: rgba(14, 165, 233, 0.15);
+  --border-color: rgba(14, 165, 233, 0.25);
+  --glow-color: rgba(14, 165, 233, 0.4);
+}
+html.theme-preset-blue.dark,
+html.theme-preset-blue .dark {
+  --border-color: rgba(14, 165, 233, 0.35);
+  --glow-color: rgba(14, 165, 233, 0.6);
+  --glass-bg: rgba(11, 17, 32, 0.85);
+}
+
+html.theme-preset-blue .text-emerald-500 { color: #0ea5e9 !important; }
+html.theme-preset-blue .text-emerald-600 { color: #0284c7 !important; }
+html:not(.dark).theme-preset-blue .text-emerald-700 { color: #0369a1 !important; }
+html:not(.dark).theme-preset-blue .text-emerald-800 { color: #075985 !important; }
+html:not(.dark).theme-preset-blue .text-emerald-950 { color: #0c4a6e !important; }
+html.theme-preset-blue .dark\:text-emerald-300 { color: #bae6fd !important; }
+html.theme-preset-blue .dark\:text-emerald-400 { color: #7dd3fc !important; }
+html.theme-preset-blue .bg-emerald-500 { background-color: #0ea5e9 !important; }
+html.theme-preset-blue .bg-emerald-600 { background-color: #0284c7 !important; }
+html.theme-preset-blue .bg-emerald-700 { background-color: #0369a1 !important; }
+html:not(.dark).theme-preset-blue .bg-emerald-950 { background-color: #0c4a6e !important; }
+html.theme-preset-blue .border-emerald-500\/10 { border-color: rgba(14, 165, 233, 0.1) !important; }
+html.theme-preset-blue .border-emerald-500\/20 { border-color: rgba(14, 165, 233, 0.2) !important; }
+html.theme-preset-blue .border-emerald-500\/30 { border-color: rgba(14, 165, 233, 0.3) !important; }
+html.theme-preset-blue .bg-emerald-500\/10 { background-color: rgba(14, 165, 233, 0.1) !important; }
+html.theme-preset-blue .bg-emerald-500\/20 { background-color: rgba(14, 165, 233, 0.2) !important; }
+html.theme-preset-blue .bg-emerald-500\/5 { background-color: rgba(14, 165, 233, 0.05) !important; }
+html.theme-preset-blue .hover\:bg-emerald-700:hover { background-color: #0369a1 !important; }
+html.theme-preset-blue .hover\:bg-emerald-200:hover { background-color: #bae6fd !important; }
+html.theme-preset-blue.dark .dark\:bg-[#0f241a], html.theme-preset-blue .dark .dark\:bg-[#0f241a] { background-color: #0f1624 !important; }
+html.theme-preset-blue .dark\:hover\:bg-emerald-400:hover { background-color: #38bdf8 !important; }
+html.theme-preset-blue .dark\:bg-emerald-500\/20 { background-color: rgba(14, 165, 233, 0.2) !important; }
+html.theme-preset-blue .dark\:text-emerald-100 { color: #f0f9ff !important; }
+html.theme-preset-blue ::-webkit-scrollbar-thumb { background: #0284c7; }
+html.theme-preset-blue ::-webkit-scrollbar-thumb:hover { background: #0ea5e9; }
+
+/* Theme preset: VIOLET BIOTECH */
+html.theme-preset-violet {
+  --color-brand: #8b5cf6;
+  --color-brand-hover: #7c3aed;
+  --color-brand-glow: rgba(139, 92, 246, 0.4);
+  --color-brand-light: rgba(139, 92, 246, 0.15);
+  --border-color: rgba(139, 92, 246, 0.25);
+  --glow-color: rgba(139, 92, 246, 0.4);
+}
+html.theme-preset-violet.dark,
+html.theme-preset-violet .dark {
+  --border-color: rgba(139, 92, 246, 0.35);
+  --glow-color: rgba(139, 92, 246, 0.6);
+  --glass-bg: rgba(22, 17, 36, 0.85);
+}
+
+html.theme-preset-violet .text-emerald-500 { color: #8b5cf6 !important; }
+html.theme-preset-violet .text-emerald-600 { color: #7c3aed !important; }
+html:not(.dark).theme-preset-violet .text-emerald-700 { color: #6d28d9 !important; }
+html:not(.dark).theme-preset-violet .text-emerald-800 { color: #5b21b6 !important; }
+html:not(.dark).theme-preset-violet .text-emerald-950 { color: #2e1065 !important; }
+html.theme-preset-violet .dark\:text-emerald-300 { color: #ddd6fe !important; }
+html.theme-preset-violet .dark\:text-emerald-400 { color: #c084fc !important; }
+html.theme-preset-violet .bg-emerald-500 { background-color: #8b5cf6 !important; }
+html.theme-preset-violet .bg-emerald-600 { background-color: #7c3aed !important; }
+html.theme-preset-violet .bg-emerald-700 { background-color: #6d28d9 !important; }
+html:not(.dark).theme-preset-violet .bg-emerald-950 { background-color: #2e1065 !important; }
+html.theme-preset-violet .border-emerald-500\/10 { border-color: rgba(139, 92, 246, 0.1) !important; }
+html.theme-preset-violet .border-emerald-500\/20 { border-color: rgba(139, 92, 246, 0.2) !important; }
+html.theme-preset-violet .border-emerald-500\/30 { border-color: rgba(139, 92, 246, 0.3) !important; }
+html.theme-preset-violet .bg-emerald-500\/10 { background-color: rgba(139, 92, 246, 0.1) !important; }
+html.theme-preset-violet .bg-emerald-500\/20 { background-color: rgba(139, 92, 246, 0.2) !important; }
+html.theme-preset-violet .bg-emerald-500\/5 { background-color: rgba(139, 92, 246, 0.05) !important; }
+html.theme-preset-violet .hover\:bg-emerald-700:hover { background-color: #6d28d9 !important; }
+html.theme-preset-violet .hover\:bg-emerald-200:hover { background-color: #ddd6fe !important; }
+html.theme-preset-violet.dark .dark\:bg-[#0f241a], html.theme-preset-violet .dark .dark\:bg-[#0f241a] { background-color: #14121c !important; }
+html.theme-preset-violet .dark\:hover\:bg-emerald-400:hover { background-color: #a78bfa !important; }
+html.theme-preset-violet .dark\:bg-emerald-500\/20 { background-color: rgba(139, 92, 246, 0.2) !important; }
+html.theme-preset-violet .dark\:text-emerald-100 { color: #faf5ff !important; }
+html.theme-preset-violet ::-webkit-scrollbar-thumb { background: #7c3aed; }
+html.theme-preset-violet ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+
+/* Custom Glow effects for headings based on theme */
+.tech-glow-text {
+  text-shadow: 0 0 15px var(--color-brand-glow);
+}
+.btn-eco::before {
+  background: var(--color-brand) !important;
+}
+
+/* High visibility rules for dark mode text as requested by the user */
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark label,
+.dark p,
+.dark span:not(.font-mono) {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.dark .text-emerald-950,
+.dark h1.text-emerald-950,
+.dark h2.text-emerald-950,
+.dark h3.text-emerald-950,
+.dark h4.text-emerald-950,
+.dark span.text-emerald-950,
+.dark p.text-emerald-950 {
+  color: #f7fee7 !important; /* Extremely high visibility white/green */
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.72);
+}
+
+.dark .text-emerald-900,
+.dark .text-emerald-800 {
+  color: #e2fcd2 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.dark .text-[#1a3a2a],
+.dark .text-[#0d281a],
+.dark .text-[#1e5837] {
+  color: #f4fbf7 !important;
+}
+
+.dark .text-[#4a6b57] {
+  color: #c2dfcf !important; /* Much lighter than original muted green */
+}
+
+/* Exquisite text stroke / high-contrast halo on headings in dark mode to make them look stunning */
+.dark h1,
+.dark h2,
+.dark h3 {
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.45), 0 2px 4px rgba(0, 0, 0, 0.8) !important;
+}
+
