@@ -695,10 +695,22 @@ function setupQuizEngine() {
       
       buttons.forEach((btn, idx) => {
         btn.classList.remove('selected', 'bg-emerald-500/10', 'border-emerald-500', 'font-semibold');
+        const badge = btn.querySelector('span:last-child');
+        
         if (idx === q.correctIdx) {
-          btn.classList.add('correct', 'bg-green-500/20', 'border-green-500', 'text-green-800', 'dark:text-green-300', 'font-bold');
+          btn.classList.add('correct');
+          if (badge) {
+            badge.innerHTML = '✓';
+            badge.className = 'w-6 h-6 rounded-full bg-green-600 text-white flex items-center justify-center text-xs font-bold shadow-sm';
+          }
         } else if (idx === APP_STATE.quiz.selectedOption) {
-          btn.classList.add('wrong', 'bg-red-500/15', 'border-red-500', 'text-red-800', 'dark:text-red-400', 'font-bold');
+          btn.classList.add('wrong');
+          if (badge) {
+            badge.innerHTML = '✗';
+            badge.className = 'w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center text-xs font-bold shadow-sm';
+          }
+        } else {
+          btn.classList.add('faded');
         }
       });
 
