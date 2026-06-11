@@ -15,6 +15,9 @@
 
     <!-- Custom Style Sheet embedded directly for maximum reliability and 100% compatibility on GitHub Pages -->
     <style type="text/tailwindcss">
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+
 /* EcoAgro 2050 - Design System & Custom Styles */
 
 @theme {
@@ -150,20 +153,29 @@ body {
 /* Custom Animated Keyframes */
 @keyframes tech-pulse {
   0%, 100% {
-    opacity: 0.3;
+    opacity: 0.35;
     transform: scale(1);
   }
   50% {
-    opacity: 0.6;
-    transform: scale(1.05);
+    opacity: 0.75;
+    transform: scale(1.04);
   }
 }
 
 .pulse-grid {
+  position: relative;
+}
+
+.pulse-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
   background-size: 40px 40px;
   background-image: linear-gradient(to right, rgba(46, 204, 113, 0.08) 1px, transparent 1px),
                     linear-gradient(to bottom, rgba(46, 204, 113, 0.08) 1px, transparent 1px);
   animation: tech-pulse 8s infinite ease-in-out;
+  pointer-events: none;
 }
 
 /* Smooth Fade In Sections */
@@ -753,13 +765,13 @@ html.theme-preset-violet ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; 
             <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight font-serif text-emerald-950 dark:text-white leading-tight">
               EcoAgro <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-400 tech-glow-text">2050</span>
             </h1>
-            <p class="text-lg sm:text-xl font-bold text-emerald-800 dark:text-emerald-300 max-w-2xl mx-auto lg:mx-0">
+            <p class="text-lg sm:text-xl font-extrabold text-emerald-900 dark:text-emerald-100 max-w-2xl mx-auto lg:mx-0">
               "Agro forte, futuro sustentável: equilíbrio entre produção e meio ambiente."
             </p>
-            <blockquote class="italic text-2xl font-extrabold font-serif text-emerald-700 dark:text-emerald-400 mt-2">
+            <blockquote class="italic text-2xl font-black font-serif text-emerald-850 dark:text-emerald-200 mt-2">
               &ldquo;Produzir mais, preservar sempre.&rdquo;
             </blockquote>
-            <p class="text-sm sm:text-base text-emerald-950 dark:text-emerald-100 max-w-xl mx-auto lg:mx-0 leading-relaxed font-semibold">
+            <p class="text-sm sm:text-base text-emerald-950 dark:text-white max-w-xl mx-auto lg:mx-0 leading-relaxed font-bold">
               Descubra como a tecnologia de alta precisão, robótica de precisão e a conservação ativa dos recursos estão construindo uma lavoura de máxima produtividade com impacto positivo em nossos ecossistemas.
             </p>
             <div class="flex flex-wrap justify-center lg:justify-start gap-4 mt-4">
